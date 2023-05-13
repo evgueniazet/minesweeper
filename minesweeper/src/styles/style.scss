@@ -9,6 +9,7 @@ body {
     background-color: $bg;
     width: 100vw;
     height: 100vh;
+    padding: 50px;
 }
 
 
@@ -26,7 +27,7 @@ body {
 
 .content-wrapper {
     display: flex;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .container {
@@ -74,6 +75,7 @@ body {
     background-color: transparent;
     border: 2px solid $secondaryDark;
     border-radius: 6px;
+    padding: 4px 8px;
 }
 
 .choose-level {
@@ -102,8 +104,19 @@ body {
 }
 
 .cell {
-    border: 2px solid $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid $secondaryDark;
     border-radius: 3px;
+    padding: 3px;
+
+    & .icon {
+        width: 30px;
+        height: 30px;
+        fill: $primaryBright;
+        stroke: $red;
+    }
 
     &-lose {
         background-color: $primary;
