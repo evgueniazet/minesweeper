@@ -1,9 +1,11 @@
-import { iconLose } from "../icons/inocLose";
+import { iconLose } from "../icons/iconLose";
 import { iconFlag } from "../icons/iconFlag";
+import gameOver from '../audio/gameOver.mp3';
 
 const handleCell = () => {
 
     const cells = document.querySelectorAll('.cell');
+    const audioLose = new Audio(gameOver);
 
     cells.forEach((cell) => {
 
@@ -12,6 +14,7 @@ const handleCell = () => {
         cell.addEventListener('click', () => {
             if (cell.hasAttribute('data-is-lose')) {
                 cell.innerHTML = iconLose;
+                audioLose.play();
             }
         })
 
