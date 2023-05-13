@@ -15,6 +15,8 @@ const handleCell = () => {
             if (cell.hasAttribute('data-is-lose')) {
                 cell.innerHTML = iconLose;
                 audioLose.play();
+                const loseMessage = document.querySelector('.lose-message');
+                loseMessage.classList.add('lose-message-active');
             }
         })
 
@@ -29,8 +31,6 @@ const handleCell = () => {
                 cell.removeChild(icon);
                 isFlag = false;
             }
-
-
         })
     })
 };

@@ -10,9 +10,12 @@ const createInfo = () => {
     info.classList.add('info');
     contentWrapper.appendChild(info);
 
+    const scoreBoard = document.createElement('div');
+    info.appendChild(scoreBoard);
+
     const time = document.createElement('div');
     time.classList.add('time');
-    info.appendChild(time);
+    scoreBoard.appendChild(time);
 
     time.innerHTML = iconClock;
 
@@ -23,7 +26,7 @@ const createInfo = () => {
 
     const move = document.createElement('div');
     move.classList.add('move');
-    info.appendChild(move);
+    scoreBoard.appendChild(move);
 
     move.innerHTML = iconStep;
 
@@ -32,9 +35,17 @@ const createInfo = () => {
     move.appendChild(moveText);
     moveText.innerText = '0';
 
+    const loseMessage = document.createElement('span');
+    loseMessage.classList.add('lose-message');
+    info.appendChild(loseMessage);
+    loseMessage.innerText = 'Game over. Try again!';
+
+    const gameButtons = document.createElement('div');
+    info.appendChild(gameButtons);
+
     const buttons = document.createElement('div');
     buttons.classList.add('buttons')
-    info.appendChild(buttons);
+    gameButtons.appendChild(buttons);
 
     const buttonStop = document.createElement('button');
     buttonStop.classList.add('button');
@@ -50,7 +61,7 @@ const createInfo = () => {
 
     const chooseLevel = document.createElement('button');
     chooseLevel.classList.add('choose-level');
-    info.appendChild(chooseLevel);
+    gameButtons.appendChild(chooseLevel);
     chooseLevel.innerText = 'Choose a level'
 };
 

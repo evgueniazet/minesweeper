@@ -15,14 +15,15 @@ const addMinesweeper = () => {
     contentWrapper.classList.add('content-wrapper');
     body.appendChild(contentWrapper);
 
+    createInfo();
+
     const container = document.createElement('section');
     container.classList.add('container');
     contentWrapper.appendChild(container);
 
-    createInfo();
+
 
     const createMatrix = () => {
-
 
         const rows = 10;
         const cols = 10;
