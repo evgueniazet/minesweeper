@@ -1,27 +1,23 @@
 import './styles/style.scss';
 import handleCell from './features/handleCell';
 import createInfo from './features/createInfo';
+import { createElement } from './features/createElement';
 
 const addMinesweeper = () => {
 
     const body = document.querySelector('body');
 
-    const title = document.createElement('h1');
-    title.classList.add('title');
+    const title = createElement('h1', 'title');
     body.appendChild(title);
     title.append('Minesweeper');
 
-    const contentWrapper = document.createElement('div');
-    contentWrapper.classList.add('content-wrapper');
+    const contentWrapper = createElement('div', 'content-wrapper');
     body.appendChild(contentWrapper);
 
     createInfo();
 
-    const container = document.createElement('section');
-    container.classList.add('container');
+    const container = createElement('section', 'container');
     contentWrapper.appendChild(container);
-
-
 
     const createMatrix = () => {
 
@@ -65,9 +61,8 @@ const addMinesweeper = () => {
 
         for (let i = 0; i < matrix.length; i++) {
             for (let j = 0; j < matrix[i].length; j++) {
-                const cell = document.createElement('div');
+                const cell = createElement('div', 'cell');
                 container.appendChild(cell);
-                cell.classList.add('cell');
                 if (matrix[i][j] === -1) {
                     cell.dataset.isLose = true;
                 }
@@ -79,7 +74,3 @@ const addMinesweeper = () => {
     handleCell();
 };
 addMinesweeper();
-
-
-
-

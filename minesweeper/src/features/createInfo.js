@@ -2,65 +2,56 @@ import { iconClock } from "../icons/iconClock";
 import { iconStep } from "../icons/iconStep";
 import { iconStop } from "../icons/iconStop";
 import { iconRestart } from "../icons/iconRestart";
+import { createElement } from './createElement.js';
 
 const createInfo = () => {
     const contentWrapper = document.querySelector('.content-wrapper')
 
-    const info = document.createElement('div');
-    info.classList.add('info');
+    const info = createElement('div', 'info');
     contentWrapper.appendChild(info);
 
     const scoreBoard = document.createElement('div');
     info.appendChild(scoreBoard);
 
-    const time = document.createElement('div');
-    time.classList.add('time');
+    const time = createElement('div', 'time');
     scoreBoard.appendChild(time);
 
     time.innerHTML = iconClock;
 
-    const timeText = document.createElement('span');
-    timeText.classList.add('text');
+    const timeText = createElement('span', 'text');
     time.appendChild(timeText);
     timeText.innerText = '00:00';
 
-    const move = document.createElement('div');
-    move.classList.add('move');
+    const move = createElement('div', 'move');
     scoreBoard.appendChild(move);
 
     move.innerHTML = iconStep;
 
-    const moveText = document.createElement('span');
-    moveText.classList.add('text');
+    const moveText = createElement('span', 'text');
     move.appendChild(moveText);
     moveText.innerText = '0';
 
-    const loseMessage = document.createElement('span');
-    loseMessage.classList.add('lose-message');
+    const loseMessage = createElement('span', 'lose-message');
     info.appendChild(loseMessage);
     loseMessage.innerText = 'Game over. Try again!';
 
     const gameButtons = document.createElement('div');
     info.appendChild(gameButtons);
 
-    const buttons = document.createElement('div');
-    buttons.classList.add('buttons')
+    const buttons = createElement('div', 'buttons');
     gameButtons.appendChild(buttons);
 
-    const buttonStop = document.createElement('button');
-    buttonStop.classList.add('button');
+    const buttonStop = createElement('button', 'button');
     buttons.appendChild(buttonStop);
 
     buttonStop.innerHTML = iconStop;
 
-    const buttonRestart = document.createElement('button');
-    buttonRestart.classList.add('button');
+    const buttonRestart = createElement('button', 'button');
     buttons.appendChild(buttonRestart);
 
     buttonRestart.innerHTML = iconRestart;
 
-    const chooseLevel = document.createElement('button');
-    chooseLevel.classList.add('choose-level');
+    const chooseLevel = createElement('button', 'choose-level');
     gameButtons.appendChild(chooseLevel);
     chooseLevel.innerText = 'Choose a level'
 };
