@@ -24,9 +24,26 @@ const addMinesweeper = () => {
 
     const matrix = createMatrix(10, 10, 10);
 
+    const buttonRestart = document.querySelectorAll('.button')[1];
+
     renderCell(matrix, container);
     handleCell(matrix);
     timer();
+
+    const handleButtonRestart = () => {
+
+        const containerChildren = container.children;
+
+        Array.from(containerChildren).forEach(child => {
+            container.removeChild(child);
+        });
+
+        const matrix = createMatrix(10, 10, 10);
+        renderCell(matrix, container);
+        handleCell(matrix);
+    }
+
+    buttonRestart.addEventListener('click', handleButtonRestart);
 };
 
 addMinesweeper();
