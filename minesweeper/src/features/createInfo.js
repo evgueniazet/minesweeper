@@ -3,6 +3,7 @@ import { iconStep } from "../icons/iconStep";
 import { iconStop } from "../icons/iconStop";
 import { iconRestart } from "../icons/iconRestart";
 import { createElement } from './createElement.js';
+import { soundOn } from '../icons/soundOn';
 
 const createInfo = () => {
     const contentWrapper = document.querySelector('.content-wrapper')
@@ -50,6 +51,11 @@ const createInfo = () => {
     buttons.appendChild(buttonRestart);
 
     buttonRestart.innerHTML = iconRestart;
+
+    const sound = createElement('button', 'sound');
+    buttons.appendChild(sound);
+
+    sound.innerHTML = soundOn;
 
     const chooseLevel = createElement('button', 'choose-level');
     gameButtons.appendChild(chooseLevel);

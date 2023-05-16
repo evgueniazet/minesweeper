@@ -26,4 +26,5 @@ const addMinesweeper = () => {
     renderCell(matrix, container);
     handleCell(matrix);
 };
+
 addMinesweeper();

@@ -2,12 +2,15 @@ import { iconFlag } from "../icons/iconFlag";
 import click from '../audio/click.mp3';
 import { getNeighbors } from "./getNeighbours";
 import { openBomb } from "./openBomb";
+import { changeSoundButton } from "./changeSoundButton";
 
 const handleCell = (matrix) => {
 
     const flattenedArray = matrix.flat();
     const cells = document.querySelectorAll('.cell');
     const gameClick = new Audio(click);
+    const buttonSound = document.querySelector('.sound');
+    const buttonSoundTitle = buttonSound.querySelector('title');
 
     let isBombOpen = false;
 
@@ -61,12 +64,23 @@ const handleCell = (matrix) => {
             } else {
                 const icon = cell.querySelector('.icon');
                 cell.removeChild(icon);
+                // if (buttonSoundTitle.innerHTML === 'sound-on') {
+                //     gameClick.play();
+                // }
                 gameClick.play();
                 isFlag = false;
             }
         })
 
     })
+
+    changeSoundButton();
+
+    buttonSound.addEventListener('click', () => {
+        gameClick.muted = !gameClick.muted;
+    })
+
+
 };
 
 export default handleCell;
