@@ -4,6 +4,7 @@ import createInfo from './features/createInfo';
 import { createElement } from './features/createElement';
 import { renderCell } from './features/renderCell';
 import { createMatrix } from './features/createMatrix';
+import { timer } from './features/timer';
 
 const addMinesweeper = () => {
 
@@ -25,6 +26,7 @@ const addMinesweeper = () => {
 
     renderCell(matrix, container);
     handleCell(matrix);
+    timer();
 };
 
 addMinesweeper();

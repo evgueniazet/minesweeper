@@ -10,7 +10,7 @@ const handleCell = (matrix) => {
     const cells = document.querySelectorAll('.cell');
     const gameClick = new Audio(click);
     const buttonSound = document.querySelector('.sound');
-    const buttonSoundTitle = buttonSound.querySelector('title');
+    // const buttonSoundTitle = buttonSound.querySelector('title');
 
     let isBombOpen = false;
 
