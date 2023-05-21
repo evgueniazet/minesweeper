@@ -32,10 +32,9 @@ const createInfo = () => {
     move.appendChild(moveText);
     moveText.innerText = '0';
 
-    const loseMessage = createElement('span', 'lose-message');
-    info.appendChild(loseMessage);
-    loseMessage.innerText = 'Game over. Try again!';
-
+    const gameOverMessage = createElement('span', 'gameover-message');
+    info.appendChild(gameOverMessage);
+    
     const gameButtons = document.createElement('div');
     info.appendChild(gameButtons);
 

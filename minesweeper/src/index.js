@@ -5,6 +5,8 @@ import { createElement } from './features/createElement';
 import { renderCell } from './features/renderCell';
 import { createMatrix } from './features/createMatrix';
 import { timer } from './features/timer';
+import { removeChildren } from './features/removeChildren';
+import { createFooter } from './features/createFooter';
 
 const addMinesweeper = () => {
 
@@ -22,7 +24,9 @@ const addMinesweeper = () => {
     const container = createElement('section', 'container');
     contentWrapper.appendChild(container);
 
-    const matrix = createMatrix(10, 10, 10);
+    const matrix = createMatrix(10, 10);
+
+    createFooter();
 
     const buttonRestart = document.querySelectorAll('.button')[1];
 
@@ -32,15 +36,12 @@ const addMinesweeper = () => {
 
     const handleButtonRestart = () => {
 
-        const containerChildren = container.children;
+        removeChildren(container);
 
-        Array.from(containerChildren).forEach(child => {
-            container.removeChild(child);
-        });
-
-        const matrix = createMatrix(10, 10, 10);
-        renderCell(matrix, container);
-        handleCell(matrix);
+        // const matrix = createMatrix(10, 10, 10);
+        // const matrix = createMatrix(10, 10);
+        // renderCell(matrix, container);
+        // handleCell(matrix);
     }
 
     buttonRestart.addEventListener('click', handleButtonRestart);

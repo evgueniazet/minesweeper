@@ -1,86 +1,81 @@
 import { iconFlag } from "../icons/iconFlag";
 import click from '../audio/click.mp3';
-import { getNeighbors } from "./getNeighbours";
 import { openBomb } from "./openBomb";
 import { changeSoundButton } from "./changeSoundButton";
+import { changeMove } from "./changeMove";
+import { createMinesweeperField } from './createMinesweeperField';
+import { renderCell } from "./renderCell";
+import { removeChildren } from "./removeChildren";
+import { getEmptyCellArr } from "./getEmptyCellArr";
+import { openCells } from "./openCells";
+import { isWin } from "./isWin";
 
 const handleCell = (matrix) => {
 
-    const flattenedArray = matrix.flat();
-    const cells = document.querySelectorAll('.cell');
     const gameClick = new Audio(click);
     const buttonSound = document.querySelector('.sound');
-    // const buttonSoundTitle = buttonSound.querySelector('title');
+    const container = document.querySelector('.container');
 
-    let isBombOpen = false;
+    let count = 0;
+    let bombCount = 10;
+    let isCellOpen = false;
+    let newMatrix;
 
-    cells.forEach((cell, i) => {
-        let isFlag = false;
+    const handleCellClick = (e) => {
 
-        const handleCellClick = () => {
+        const targetCell = e.target;
+        const cellIndex = [...targetCell.parentNode.children].indexOf(targetCell);
 
-            gameClick.play();
+        if (!isCellOpen) {
 
-            cell.classList.add('cell-open')
-            if (cell.hasAttribute('data-is-lose')) {
-                openBomb(cell);
-            } else {
-                const result = getNeighbors(matrix, i);
+            if (targetCell.classList.contains('cell')) {
 
-                flattenedArray.forEach((element, index) => {
-
-                    if (i === index && element !== 0) {
-                        cell.innerHTML = element;
-                    }
-
-                    result.forEach((el) => {
-                        if (index === el && element !== 0 && element !== -1) {
-                            cells[el].innerHTML = element;
-                            cells[el].classList.add('cell-open');
-                        } else if (index === el && element === -1) {
-                            isBombOpen = true;
-                            openBomb(cells[index]);
-                        }
-                    })
-                })
-
-                if (isBombOpen) {
-                    cells.forEach((cell) => {
-                        cell.disabled = true;
-                    })
-                }
+                removeChildren(container);
+                newMatrix = createMinesweeperField(matrix, bombCount, cellIndex);
+                renderCell(newMatrix, container);
             }
+
+            isCellOpen = true;
         }
 
-        cell.addEventListener('click', handleCellClick);
+        count++;
+        changeMove(count);
+        gameClick.play();
 
-        cell.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
+        targetCell.classList.add('cell-open');
 
-            if (!isFlag) {
-                cell.innerHTML = iconFlag;
-                gameClick.play();
-                isFlag = true;
-            } else {
-                const icon = cell.querySelector('.icon');
-                cell.removeChild(icon);
-                // if (buttonSoundTitle.innerHTML === 'sound-on') {
-                //     gameClick.play();
-                // }
-                gameClick.play();
-                isFlag = false;
+        const attributeValue = targetCell.getAttribute('data-number');
+
+        if (targetCell.hasAttribute('data-is-lose')) {
+            openBomb(targetCell);
+        } else if (attributeValue === '0') {
+            const emptyCellArr = getEmptyCellArr(cellIndex, newMatrix);
+            openCells(emptyCellArr, container);
+        } else {
+            if (attributeValue === '1') {
+                targetCell.classList.add('cell-open-one');
+                targetCell.innerHTML = '1';
             }
-        })
 
-    })
+            if (attributeValue === '2') {
+                targetCell.classList.add('cell-open-three');
+                targetCell.innerHTML = '2';
+            }
+
+            if (attributeValue === '3') {
+                targetCell.classList.add('cell-open-two');
+                targetCell.innerHTML = '3';
+            }
+        }
+        isWin(newMatrix, bombCount, count);
+    }
+    container.addEventListener('click', handleCellClick);
 
     changeSoundButton();
 
     buttonSound.addEventListener('click', () => {
         gameClick.muted = !gameClick.muted;
     })
-
-
 };
 
 export default handleCell;
