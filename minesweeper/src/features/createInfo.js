@@ -11,8 +11,11 @@ const createInfo = () => {
     const info = createElement('div', 'info');
     contentWrapper.appendChild(info);
 
+    const infoWrapper = createElement('div', 'info-wrapper');
+    info.appendChild(infoWrapper);
+
     const scoreBoard = document.createElement('div');
-    info.appendChild(scoreBoard);
+    infoWrapper.appendChild(scoreBoard);
 
     const time = createElement('div', 'time');
     scoreBoard.appendChild(time);
@@ -33,10 +36,10 @@ const createInfo = () => {
     moveText.innerText = '0';
 
     const gameOverMessage = createElement('span', 'gameover-message');
-    info.appendChild(gameOverMessage);
-    
+    infoWrapper.appendChild(gameOverMessage);
+
     const gameButtons = document.createElement('div');
-    info.appendChild(gameButtons);
+    infoWrapper.appendChild(gameButtons);
 
     const buttons = createElement('div', 'buttons');
     gameButtons.appendChild(buttons);

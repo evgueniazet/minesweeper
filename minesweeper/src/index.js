@@ -7,6 +7,7 @@ import { createMatrix } from './features/createMatrix';
 import { timer } from './features/timer';
 import { removeChildren } from './features/removeChildren';
 import { createFooter } from './features/createFooter';
+import { changeLevel } from './features/changeLevel';
 
 const addMinesweeper = () => {
 
@@ -45,6 +46,8 @@ const addMinesweeper = () => {
     }
 
     buttonRestart.addEventListener('click', handleButtonRestart);
+
+    changeLevel();
 };
 
 addMinesweeper();

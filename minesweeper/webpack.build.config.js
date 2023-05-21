@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -33,6 +32,16 @@ module.exports = {
         ]
       },
       {
+        test: /\.(mp3)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'audio/',
+          },
+        },
+      },
+      {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: [
           {
@@ -49,7 +58,5 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html'
-    }),
-    new CleanWebpackPlugin()
-  ]
+    })]
 };

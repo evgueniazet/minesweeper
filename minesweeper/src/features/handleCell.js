@@ -29,7 +29,6 @@ const handleCell = (matrix) => {
         if (!isCellOpen) {
 
             if (targetCell.classList.contains('cell')) {
-
                 removeChildren(container);
                 newMatrix = createMinesweeperField(matrix, bombCount, cellIndex);
                 renderCell(newMatrix, container);
