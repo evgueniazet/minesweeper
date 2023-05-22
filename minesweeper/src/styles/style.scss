@@ -23,7 +23,7 @@ body {
 
 .title {
     text-transform: uppercase;
-    font-size: 2.5em;
+    font-size: 45px;
     letter-spacing: 0.3em;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     margin: 0;
@@ -33,11 +33,16 @@ body {
     -webkit-text-fill-color: transparent;
 
     @include desktop {
-        font-size: 1.8em;
+        font-size: 40px;
     }
 
     @include tablet {
-        font-size: 1.4em;
+        font-size: 35px;
+    }
+
+
+    @include mobile {
+        font-size: 30px;
     }
 }
 
@@ -99,9 +104,15 @@ body {
         display: none;
     }
 
-    &-title {}
+    &-title {
+        font-size: 35px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
 
-    &-list {}
+    &-list {
+        font-size: 20px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
 
     &-close-button {
         position: absolute;
@@ -116,6 +127,22 @@ body {
             height: 20px;
             margin-bottom: 3px;
         }
+    }
+}
+
+.results-button {
+    background-color: $secondary;
+    border: 2px solid $secondaryDark;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color .3s linear;
+
+    &:hover {
+        background-color: lighten($secondary, 4%);
+        transition: background-color .3s linear;
     }
 }
 
@@ -155,10 +182,10 @@ body {
 
 .info {
     position: relative;
-    border: 2px solid $secondaryMedium;
-    border-radius: 6px;
+    // border: 2px solid $secondaryMedium;
+    // border-radius: 6px;
     padding: 20px;
-    width: 95%;
+    width: 88%;
 
     &-wrapper {
         display: flex;
@@ -174,7 +201,7 @@ body {
 .change-level-wrapper {
     display: none;
     justify-content: center;
-    padding: 50px;
+    padding: 30px;
 
     &-active {
         display: flex;
@@ -182,17 +209,47 @@ body {
 }
 
 .level-button {
-    margin-left: 50px;
+    display: flex;
+    background-color: $secondary;
+    border: 2px solid $secondaryDark;
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    padding: 3px 40px;
+
+    transition: background-color .3s linear;
+
+    &:hover {
+        background-color: lighten($secondary, 4%);
+        transition: background-color .3s linear;
+    }
+
+    &:not(:first-child) {
+        margin-left: 20px;
+    }
 }
 
-.close-button {
+.close-button,
+.results-close-button {
 
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 11px;
+    top: 10px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    background-color: $secondary;
+    border: 2px solid $secondaryDark;
+    cursor: pointer;
+    transition: background-color .3s linear;
+
+
+    &:hover {
+        background-color: lighten($secondary, 4%);
+        transition: background-color .3s linear;
+    }
 
     & .icon {
         width: 20px;
@@ -225,30 +282,58 @@ body {
 
 .button {
     display: flex;
-    background-color: transparent;
+    background-color: $secondary;
     border: 2px solid $secondaryDark;
     border-radius: 6px;
     padding: 4px 8px;
     cursor: pointer;
+    transition: background-color .3s linear;
+
+    &:hover {
+        background-color: lighten($secondary, 4%);
+        transition: background-color .3s linear;
+    }
+}
+
+.sound {
+    display: flex;
+    background-color: $secondary;
+    border: 2px solid $secondaryDark;
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: background-color .3s linear;
+
+    &:hover {
+        background-color: lighten($secondary, 4%);
+        transition: background-color .3s linear;
+    }
 }
 
 .choose-level {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: $black;
-    font-size: 1em;
+    font-size: 20px;
     margin-top: 30px;
     padding: 15px;
     border: 2px solid $secondaryDark;
     border-radius: 6px;
     background-color: $secondary;
+    cursor: pointer;
+    transition: background-color .3s linear;
+
+    &:hover {
+        background-color: lighten($secondary, 4%);
+        transition: background-color .3s linear;
+    }
 
     @include desktop {
-        font-size: 0.7em;
+        // font-size: 0.7em;
         padding: 10px 26px;
     }
 
     @include mobile {
-        font-size: 0.8em;
+        // font-size: 0.8em;
         padding: 10px 5px;
     }
 }
@@ -271,19 +356,27 @@ body {
 
 .text {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 1em;
+    font-size: 20px;
     color: $black;
     margin-top: 15px;
     margin-left: 20px;
 
     @include desktop {
-        font-size: 0.7em;
+        // font-size: 0.7em;
     }
 
     @include mobile {
         margin-top: 7px;
         margin-left: 10px;
     }
+}
+
+.bombs {
+    // display: flex;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    color: $black;
+    margin-top: 30px;
 }
 
 .gameover-message {
@@ -366,20 +459,20 @@ body {
 
     &-open {
 
-        background-color: $secondaryMedium;
+        background-color: $bg;
 
         &-one {
-            background-color: transparent;
+            background-color: $bg;
             color: $black;
         }
 
         &-two {
-            background-color: transparent;
+            background-color: $bg;
             color: $primaryBright;
         }
 
         &-three {
-            background-color: transparent;
+            background-color: $bg;
             color: $secondaryDark;
         }
 

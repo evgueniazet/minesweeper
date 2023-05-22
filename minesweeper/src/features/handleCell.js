@@ -10,14 +10,13 @@ import { getEmptyCellArr } from "./getEmptyCellArr";
 import { openCells } from "./openCells";
 import { isWin } from "./isWin";
 import { getOpenCellsArr } from "./getOpenCellsArr";
-// import { getNeighbours } from "./getNeighbours";
+import { getNeighbours } from "./getNeighbours";
 
 const handleCell = (matrix) => {
 
     const gameClick = new Audio(click);
     const buttonSound = document.querySelector('.sound');
     const container = document.querySelector('.container');
-    // const cells = document.querySelectorAll('.cell');
     const bombsCount = document.querySelector('.bombs-count');
 
     let count = 0;
@@ -31,157 +30,168 @@ const handleCell = (matrix) => {
         const targetCell = e.target;
         const cellIndex = [...targetCell.parentNode.children].indexOf(targetCell);
 
-        if (!isCellOpen) {
 
-            if (targetCell.classList.contains('cell')) {
+        if (targetCell.classList.contains('cell')) {
+
+            if (!isCellOpen) {
                 removeChildren(container);
                 newMatrix = createMinesweeperField(matrix, bombCount, cellIndex);
                 renderCell(newMatrix, container);
             }
 
             isCellOpen = true;
+
+            count++;
+            changeMove(count);
+            gameClick.play();
+
+            targetCell.classList.add('cell-open');
+
+            const attributeValue = targetCell.getAttribute('data-number');
+
+            if (targetCell.hasAttribute('data-is-lose')) {
+                openBomb(targetCell);
+            } else if (attributeValue === '0') {
+                const emptyCellArr = getEmptyCellArr(cellIndex, newMatrix);
+                const openCellArr = getOpenCellsArr(emptyCellArr, newMatrix);
+                openCells(openCellArr, container, targetCell);
+            } else {
+
+                const attributeFlag = targetCell.hasAttribute('data-flag', 'true');
+
+                if (attributeValue === '1' && !attributeFlag) {
+                    targetCell.classList.add('cell-open-one');
+                    targetCell.innerHTML = '1';
+                }
+
+                if (attributeValue === '2' && !attributeFlag) {
+                    targetCell.classList.add('cell-open-three');
+                    targetCell.innerHTML = '2';
+                }
+
+                if (attributeValue === '3' && !attributeFlag) {
+                    targetCell.classList.add('cell-open-two');
+                    targetCell.innerHTML = '3';
+                }
+            }
+            isWin(newMatrix, bombCount, count);
         }
-
-        count++;
-        changeMove(count);
-        gameClick.play();
-
-        targetCell.classList.add('cell-open');
-
-        const attributeValue = targetCell.getAttribute('data-number');
-
-        if (targetCell.hasAttribute('data-is-lose')) {
-            openBomb(targetCell);
-        } else if (attributeValue === '0') {
-            const emptyCellArr = getEmptyCellArr(cellIndex, newMatrix);
-
-            const openCellArr = getOpenCellsArr(emptyCellArr, newMatrix);
-
-            openCells(openCellArr, container, targetCell);
-        } else {
-            if (attributeValue === '1') {
-                targetCell.classList.add('cell-open-one');
-                targetCell.innerHTML = '1';
-            }
-
-            if (attributeValue === '2') {
-                targetCell.classList.add('cell-open-three');
-                targetCell.innerHTML = '2';
-            }
-
-            if (attributeValue === '3') {
-                targetCell.classList.add('cell-open-two');
-                targetCell.innerHTML = '3';
-            }
-        }
-        isWin(newMatrix, bombCount, count);
     }
 
-
-
     const handleContextMenu = (e) => {
+
         e.preventDefault();
 
-        const targetCell = e.target;
-        const cellIndex = [...targetCell.parentNode.children].indexOf(targetCell);
+        const targetCell = e.target.closest('.cell');
 
-        const icon = targetCell.querySelector('.icon');
-        const isFlag = targetCell.getAttribute('data-flag') === 'true';
+        if (targetCell && targetCell.classList.contains('cell') && targetCell.classList.length === 1) {
+            if (bombsCount.innerHTML > 0) {
+                const isFlag = targetCell.getAttribute('data-flag');
 
-
-        if (bombsCount.innerHTML > 0) {
-
-            if (!isFlag) {
-                targetCell.innerHTML = iconFlag;
-                targetCell.setAttribute('data-flag', 'true');
-                bombsCount.innerHTML = bombsCount.innerHTML - 1;
-            } else {
-                if (icon) {
+                if (isFlag !== 'true') {
+                    targetCell.innerHTML = iconFlag;
+                    targetCell.setAttribute('data-flag', 'true');
+                    bombsCount.innerHTML = bombsCount.innerHTML - 1;
+                } else {
+                    const icon = targetCell.querySelector('.icon');
                     targetCell.removeChild(icon);
-                    targetCell.setAttribute('data-flag', 'false');
+                    targetCell.removeAttribute('data-flag');
                     bombsCount.innerHTML = Number(bombsCount.innerHTML) + 1;
                 }
             }
         }
-
     };
-
-    container.addEventListener('click', handleCellClick);
 
     container.addEventListener('contextmenu', handleContextMenu);
 
 
-    // container.addEventListener("mousedown", (event) => {
-
-    //     event.preventDefault();
-    //     if (event.button === 2) { // Правая кнопка мыши нажата
-    //         container.addEventListener("click", (e) => {
-
-    //             const targetCell = e.target;
-    //             const cellIndex = [...(targetCell.parentNode?.children || [])].indexOf(targetCell);
-
-    //             const isNumberCell = (targetCell) => {
-    //                 if (targetCell.classList.contains('cell-open-one')) {
-    //                     return true;
-    //                 }
-
-    //                 if (targetCell.classList.contains('cell-open-two')) {
-    //                     return true;
-    //                 }
-
-    //                 if (targetCell.classList.contains('cell-open-three')) {
-    //                     return true;
-    //                 }
-    //             }
-
-    //             if (targetCell.classList.contains('cell-open') && isNumberCell(targetCell)) {
+    container.addEventListener('click', handleCellClick);
 
 
-    //                 console.log('targetCell', targetCell);
-    //                 // const neighbours = getNeighbours(newMatrix, cellIndex);
-    //                 // // let flagsCount = 0;
-    //                 // cells.forEach((cell, index) => {
-    //                 //     neighbours.forEach((elem) => {
-    //                 //         if (elem === index && cell.hasAttribute('data-flag', 'true')) {
-    //                 //             flagsCount = flagsCount + 1;
-    //                 //         }
-    //                 //     })
-    //                 // })
+    container.addEventListener("mousedown", (event) => {
 
-    //                 // console.log('flagsCount', flagsCount);
+        const childrenArray = Array.from(container.children);
 
-    //             }
+        event.preventDefault();
+        if (event.button === 2) {
+            container.addEventListener("click", (e) => {
 
-    //         });
-    //     }
-    // });
+                const targetCell = e.target;
+                const cellIndex = [...(targetCell.parentNode?.children || [])].indexOf(targetCell);
 
-    // cells.forEach((cell) => {
+                const isNumberCell = (targetCell) => {
+                    if (targetCell.classList.contains('cell-open-one') && targetCell.classList.contains('cell-open')) {
+                        return true;
+                    }
 
-    //     cell.addEventListener('contextmenu', (e) => {
-    //         e.preventDefault();
+                    if (targetCell.classList.contains('cell-open-two') && targetCell.classList.contains('cell-open')) {
+                        return true;
+                    }
 
-    //         const icon = cell.querySelector('.icon');
-    //         const isFlag = cell.getAttribute('data-flag') === 'true';
+                    if (targetCell.classList.contains('cell-open-three') && targetCell.classList.contains('cell-open')) {
+                        return true;
+                    }
+                }
+
+                if (isNumberCell(targetCell)) {
+
+                    const neighbours = getNeighbours(newMatrix, cellIndex);
+
+                    let countBomb = 0;
+                    let countFlag = 0;
+
+                    childrenArray.forEach((elem, i) => {
+
+                        const attributeValue = elem.getAttribute('data-number');
+
+                        neighbours.forEach((item) => {
+                            if (i === item && elem.hasAttribute('data-is-lose')) {
+                                countBomb++;
+                            }
+
+                            if (i === item && elem.hasAttribute('data-flag', 'true')) {
+                                countFlag++;
+                            }
+
+                            console.log('countFlag, countBomb', countFlag, countBomb);
+
+                            if (countFlag === countBomb) {
+
+                                if (item === i && attributeValue === '1') {
+                                    elem.classList.add('cell-open');
+                                    elem.classList.add('cell-open-one');
+                                    elem.innerHTML = '1';
+                                }
+
+                                if (item === i && attributeValue === '2') {
+                                    elem.classList.add('cell-open');
+                                    elem.classList.add('cell-open-two');
+                                    elem.innerHTML = '2';
+                                }
+
+                                if (item === i && attributeValue === '3') {
+                                    elem.classList.add('cell-open');
+                                    elem.classList.add('cell-open-three');
+                                    elem.innerHTML = '3';
+                                }
+
+                                // if (item === i && elem.hasAttribute('data-is-lose') && !elem.hasAttribute('data-flag', 'true')) {
+                                //     openBomb(elem);
+                                // }
+
+                                if (item === i && elem.hasAttribute('data-is-lose')) {
+                                    openBomb(elem);
+                                }
+                            }
+                        })
+                    })
 
 
-    //         if (bombsCount.innerHTML > 0) {
+                }
 
-    //             if (!isFlag) {
-    //                 cell.innerHTML = iconFlag;
-    //                 cell.setAttribute('data-flag', 'true');
-    //                 bombsCount.innerHTML = bombsCount.innerHTML - 1;
-    //             } else {
-    //                 if (icon) {
-    //                     cell.removeChild(icon);
-    //                     cell.setAttribute('data-flag', 'false');
-    //                     bombsCount.innerHTML = Number(bombsCount.innerHTML) + 1;
-    //                 }
-    //             }
-    //         }
-
-    //     });
-    // });
+            });
+        }
+    });
 
     changeSoundButton();
 
