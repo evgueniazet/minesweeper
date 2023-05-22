@@ -35,6 +35,18 @@ const createInfo = () => {
     move.appendChild(moveText);
     moveText.innerText = '0';
 
+    const bombs = createElement('div', 'bombs');
+    scoreBoard.appendChild(bombs);
+
+    const bombsText = createElement('span', 'bombs-text');
+    bombs.appendChild(bombsText);
+    bombsText.innerHTML = 'Bombs: ';
+
+    const bombsCount = createElement('span', 'bombs-count');
+    bombs.appendChild(bombsCount);
+    bombsCount.innerHTML = '10';
+
+
     const gameOverMessage = createElement('span', 'gameover-message');
     infoWrapper.appendChild(gameOverMessage);
 

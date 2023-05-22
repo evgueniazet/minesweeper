@@ -15,11 +15,14 @@ const handleCell = (matrix) => {
     const gameClick = new Audio(click);
     const buttonSound = document.querySelector('.sound');
     const container = document.querySelector('.container');
+    const cells = document.querySelectorAll('.cell');
+    const bombsCount = document.querySelector('.bombs-count');
 
     let count = 0;
     let bombCount = 10;
     let isCellOpen = false;
     let newMatrix;
+
 
     const handleCellClick = (e) => {
 
@@ -68,7 +71,33 @@ const handleCell = (matrix) => {
         }
         isWin(newMatrix, bombCount, count);
     }
+
     container.addEventListener('click', handleCellClick);
+
+    cells.forEach((cell) => {
+        cell.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+
+            const icon = cell.querySelector('.icon');
+            const isFlag = cell.getAttribute('data-flag') === 'true';
+
+            if (bombsCount.innerHTML > 0) {
+
+                if (!isFlag) {
+                    cell.innerHTML = iconFlag;
+                    cell.setAttribute('data-flag', 'true');
+                    bombsCount.innerHTML = bombsCount.innerHTML - 1;
+                    console.log('bombcount', bombCount);
+                } else {
+                    if (icon) {
+                        cell.removeChild(icon);
+                        cell.setAttribute('data-flag', 'false');
+                    }
+                }
+            }
+
+        });
+    });
 
     changeSoundButton();
 
