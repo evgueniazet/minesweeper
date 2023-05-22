@@ -1,4 +1,4 @@
-export const getNeighbors = (matrix, clickedIndex) => {
+export const getNeighbours = (matrix, clickedIndex) => {
     const row = Math.floor(clickedIndex / matrix[0].length);
     const col = clickedIndex % matrix[0].length;
     const neighbors = [];

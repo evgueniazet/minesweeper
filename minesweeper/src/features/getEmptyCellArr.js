@@ -1,8 +1,8 @@
-import { getNeighbors } from "./getNeighbours";
+import { getNeighbours } from "./getNeighbours";
 
 export const getEmptyCellArr = (index, matrix) => {
 
-    const neighbors = getNeighbors(matrix, index);
+    const neighbors = getNeighbours(matrix, index);
     const flattenedArray = matrix.flat();
     const emptyCellArr = [];
 
@@ -10,7 +10,7 @@ export const getEmptyCellArr = (index, matrix) => {
         array.forEach((item) => {
             if (flattenedArray[item] === 0 && !emptyCellArr.includes(item)) {
                 emptyCellArr.push(item);
-                pushZeroElem(getNeighbors(matrix, item));
+                pushZeroElem(getNeighbours(matrix, item));
             }
         });
     };

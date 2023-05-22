@@ -10,13 +10,14 @@ import { getEmptyCellArr } from "./getEmptyCellArr";
 import { openCells } from "./openCells";
 import { isWin } from "./isWin";
 import { getOpenCellsArr } from "./getOpenCellsArr";
+// import { getNeighbours } from "./getNeighbours";
 
 const handleCell = (matrix) => {
 
     const gameClick = new Audio(click);
     const buttonSound = document.querySelector('.sound');
     const container = document.querySelector('.container');
-    const cells = document.querySelectorAll('.cell');
+    // const cells = document.querySelectorAll('.cell');
     const bombsCount = document.querySelector('.bombs-count');
 
     let count = 0;
@@ -53,9 +54,10 @@ const handleCell = (matrix) => {
             openBomb(targetCell);
         } else if (attributeValue === '0') {
             const emptyCellArr = getEmptyCellArr(cellIndex, newMatrix);
-            getOpenCellsArr(emptyCellArr, newMatrix);
 
-            openCells(emptyCellArr, container);
+            const openCellArr = getOpenCellsArr(emptyCellArr, newMatrix);
+
+            openCells(openCellArr, container, targetCell);
         } else {
             if (attributeValue === '1') {
                 targetCell.classList.add('cell-open-one');
@@ -75,32 +77,111 @@ const handleCell = (matrix) => {
         isWin(newMatrix, bombCount, count);
     }
 
-    container.addEventListener('click', handleCellClick);
 
-    cells.forEach((cell) => {
-        cell.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
 
-            const icon = cell.querySelector('.icon');
-            const isFlag = cell.getAttribute('data-flag') === 'true';
+    const handleContextMenu = (e) => {
+        e.preventDefault();
 
-            if (bombsCount.innerHTML > 0) {
+        const targetCell = e.target;
+        const cellIndex = [...targetCell.parentNode.children].indexOf(targetCell);
 
-                if (!isFlag) {
-                    cell.innerHTML = iconFlag;
-                    cell.setAttribute('data-flag', 'true');
-                    bombsCount.innerHTML = bombsCount.innerHTML - 1;
-                    console.log('bombcount', bombCount);
-                } else {
-                    if (icon) {
-                        cell.removeChild(icon);
-                        cell.setAttribute('data-flag', 'false');
-                    }
+        const icon = targetCell.querySelector('.icon');
+        const isFlag = targetCell.getAttribute('data-flag') === 'true';
+
+
+        if (bombsCount.innerHTML > 0) {
+
+            if (!isFlag) {
+                targetCell.innerHTML = iconFlag;
+                targetCell.setAttribute('data-flag', 'true');
+                bombsCount.innerHTML = bombsCount.innerHTML - 1;
+            } else {
+                if (icon) {
+                    targetCell.removeChild(icon);
+                    targetCell.setAttribute('data-flag', 'false');
+                    bombsCount.innerHTML = Number(bombsCount.innerHTML) + 1;
                 }
             }
+        }
 
-        });
-    });
+    };
+
+    container.addEventListener('click', handleCellClick);
+
+    container.addEventListener('contextmenu', handleContextMenu);
+
+
+    // container.addEventListener("mousedown", (event) => {
+
+    //     event.preventDefault();
+    //     if (event.button === 2) { // Правая кнопка мыши нажата
+    //         container.addEventListener("click", (e) => {
+
+    //             const targetCell = e.target;
+    //             const cellIndex = [...(targetCell.parentNode?.children || [])].indexOf(targetCell);
+
+    //             const isNumberCell = (targetCell) => {
+    //                 if (targetCell.classList.contains('cell-open-one')) {
+    //                     return true;
+    //                 }
+
+    //                 if (targetCell.classList.contains('cell-open-two')) {
+    //                     return true;
+    //                 }
+
+    //                 if (targetCell.classList.contains('cell-open-three')) {
+    //                     return true;
+    //                 }
+    //             }
+
+    //             if (targetCell.classList.contains('cell-open') && isNumberCell(targetCell)) {
+
+
+    //                 console.log('targetCell', targetCell);
+    //                 // const neighbours = getNeighbours(newMatrix, cellIndex);
+    //                 // // let flagsCount = 0;
+    //                 // cells.forEach((cell, index) => {
+    //                 //     neighbours.forEach((elem) => {
+    //                 //         if (elem === index && cell.hasAttribute('data-flag', 'true')) {
+    //                 //             flagsCount = flagsCount + 1;
+    //                 //         }
+    //                 //     })
+    //                 // })
+
+    //                 // console.log('flagsCount', flagsCount);
+
+    //             }
+
+    //         });
+    //     }
+    // });
+
+    // cells.forEach((cell) => {
+
+    //     cell.addEventListener('contextmenu', (e) => {
+    //         e.preventDefault();
+
+    //         const icon = cell.querySelector('.icon');
+    //         const isFlag = cell.getAttribute('data-flag') === 'true';
+
+
+    //         if (bombsCount.innerHTML > 0) {
+
+    //             if (!isFlag) {
+    //                 cell.innerHTML = iconFlag;
+    //                 cell.setAttribute('data-flag', 'true');
+    //                 bombsCount.innerHTML = bombsCount.innerHTML - 1;
+    //             } else {
+    //                 if (icon) {
+    //                     cell.removeChild(icon);
+    //                     cell.setAttribute('data-flag', 'false');
+    //                     bombsCount.innerHTML = Number(bombsCount.innerHTML) + 1;
+    //                 }
+    //             }
+    //         }
+
+    //     });
+    // });
 
     changeSoundButton();
 
