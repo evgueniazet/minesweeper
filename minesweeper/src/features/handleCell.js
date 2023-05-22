@@ -9,6 +9,7 @@ import { removeChildren } from "./removeChildren";
 import { getEmptyCellArr } from "./getEmptyCellArr";
 import { openCells } from "./openCells";
 import { isWin } from "./isWin";
+import { getOpenCellsArr } from "./getOpenCellsArr";
 
 const handleCell = (matrix) => {
 
@@ -52,6 +53,8 @@ const handleCell = (matrix) => {
             openBomb(targetCell);
         } else if (attributeValue === '0') {
             const emptyCellArr = getEmptyCellArr(cellIndex, newMatrix);
+            getOpenCellsArr(emptyCellArr, newMatrix);
+
             openCells(emptyCellArr, container);
         } else {
             if (attributeValue === '1') {
