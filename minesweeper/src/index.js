@@ -5,9 +5,11 @@ import { createElement } from './features/createElement';
 import { renderCell } from './features/renderCell';
 import { createMatrix } from './features/createMatrix';
 import { timer } from './features/timer';
-import { removeChildren } from './features/removeChildren';
+// import { removeChildren } from './features/removeChildren';
 import { createFooter } from './features/createFooter';
 import { changeLevel } from './features/changeLevel';
+// import { toggleTheme } from './features/toggleTheme';
+
 
 const addMinesweeper = () => {
 
@@ -27,31 +29,14 @@ const addMinesweeper = () => {
 
     const matrix = createMatrix(10, 10);
 
-    // createInfo();
-
     createFooter();
-
-    const buttonRestart = document.querySelectorAll('.button')[1];
-
     renderCell(matrix, container);
     handleCell(matrix);
     timer();
-
-    const handleButtonRestart = () => {
-
-        removeChildren(container);
-
-        // const matrix = createMatrix(10, 10, 10);
-        // const matrix = createMatrix(10, 10);
-        // renderCell(matrix, container);
-        // handleCell(matrix);
-    }
-
-    buttonRestart.addEventListener('click', handleButtonRestart);
-
     changeLevel();
+    // toggleTheme();
 };
 
 addMinesweeper();
 
-// alert('Дорогой проверяющий! Буду очень очень благодарна, если ты дашь мне ещё сутки, чтобы доделать работу :) Заранее спасибо!');
+alert('Дорогой проверяющий! Буду очень очень благодарна, если ты дашь мне ещё сутки, чтобы доделать работу :) Заранее спасибо!');

@@ -8,9 +8,6 @@ export const createFooter = () => {
     const footer = createElement('footer', 'footer');
     contentWrapper.appendChild(footer);
 
-    // const gameOverMessage = createElement('span', 'gameover-message');
-    // footer.appendChild(gameOverMessage);
-
     const resultsButton = createElement('button', 'results-button');
     footer.appendChild(resultsButton);
     resultsButton.innerHTML = 'Show results';

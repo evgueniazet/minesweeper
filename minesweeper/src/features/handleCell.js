@@ -11,6 +11,8 @@ import { openCells } from "./openCells";
 import { isWin } from "./isWin";
 import { getOpenCellsArr } from "./getOpenCellsArr";
 import { getNeighbours } from "./getNeighbours";
+import { createMatrix } from "./createMatrix";
+import { toggleTheme } from "./toggleTheme";
 
 const handleCell = (matrix) => {
 
@@ -18,6 +20,8 @@ const handleCell = (matrix) => {
     const buttonSound = document.querySelector('.sound');
     const container = document.querySelector('.container');
     const bombsCount = document.querySelector('.bombs-count');
+    const buttonRestart = document.querySelectorAll('.button')[1];
+    const gameOverMessage = document.querySelector('.gameover-message');
 
     let count = 0;
     let bombCount = 10;
@@ -37,9 +41,12 @@ const handleCell = (matrix) => {
                 removeChildren(container);
                 newMatrix = createMinesweeperField(matrix, bombCount, cellIndex);
                 renderCell(newMatrix, container);
+                toggleTheme(container);
             }
 
             isCellOpen = true;
+
+            toggleTheme(container);
 
             count++;
             changeMove(count);
@@ -195,8 +202,30 @@ const handleCell = (matrix) => {
 
     changeSoundButton();
 
+    const handleButtonRestart = () => {
+
+        gameOverMessage.classList.remove('gameover-message-active');
+        removeChildren(container);
+        const matrix = createMatrix(10, 10);
+        renderCell(matrix, container);
+        handleCell(matrix);
+        count = 0;
+        changeMove(count);
+        bombCount = 10;
+        bombsCount.innerHTML = bombCount;
+        container.classList.remove('container-blocked');
+    }
+
+    buttonRestart.addEventListener('click', handleButtonRestart);
+
     buttonSound.addEventListener('click', () => {
         gameClick.muted = !gameClick.muted;
+
+        if (gameClick.muted) {
+            buttonSound.setAttribute('data-sound-on', 'false');
+        } else {
+            buttonSound.removeAttribute('data-sound-on');
+        }
     })
 };
 

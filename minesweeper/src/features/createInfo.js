@@ -4,6 +4,7 @@ import { iconStop } from "../icons/iconStop";
 import { iconRestart } from "../icons/iconRestart";
 import { createElement } from './createElement.js';
 import { soundOn } from '../icons/soundOn';
+import { lightTheme } from "../icons/lightTheme";
 
 const createInfo = () => {
     const contentWrapper = document.querySelector('.content-wrapper')
@@ -46,7 +47,6 @@ const createInfo = () => {
     bombs.appendChild(bombsCount);
     bombsCount.innerHTML = '10';
 
-
     const gameButtons = document.createElement('div');
     infoWrapper.appendChild(gameButtons);
 
@@ -67,6 +67,11 @@ const createInfo = () => {
     buttons.appendChild(sound);
 
     sound.innerHTML = soundOn;
+
+    const theme = createElement('button', 'theme');
+    buttons.appendChild(theme);
+
+    theme.innerHTML = lightTheme;
 
     const chooseLevel = createElement('button', 'choose-level');
     gameButtons.appendChild(chooseLevel);

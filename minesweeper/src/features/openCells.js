@@ -1,8 +1,6 @@
 export const openCells = (arr, container, targetCell) => {
 
     const childrenArray = Array.from(container.children);
-
-
     if (arr.length > 0) {
 
         childrenArray.forEach((elem, index) => {
