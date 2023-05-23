@@ -47,9 +47,6 @@ const createInfo = () => {
     bombsCount.innerHTML = '10';
 
 
-    const gameOverMessage = createElement('span', 'gameover-message');
-    infoWrapper.appendChild(gameOverMessage);
-
     const gameButtons = document.createElement('div');
     infoWrapper.appendChild(gameButtons);
 
@@ -74,6 +71,9 @@ const createInfo = () => {
     const chooseLevel = createElement('button', 'choose-level');
     gameButtons.appendChild(chooseLevel);
     chooseLevel.innerText = 'Choose a level'
+
+    const gameOverMessage = createElement('span', 'gameover-message');
+    info.appendChild(gameOverMessage);
 };
 
 export default createInfo;

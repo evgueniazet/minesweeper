@@ -27,6 +27,8 @@ const addMinesweeper = () => {
 
     const matrix = createMatrix(10, 10);
 
+    // createInfo();
+
     createFooter();
 
     const buttonRestart = document.querySelectorAll('.button')[1];
@@ -52,4 +54,4 @@ const addMinesweeper = () => {
 
 addMinesweeper();
 
-alert('Дорогой проверяющий! Буду очень очень благодарна, если ты дашь мне ещё сутки, чтобы доделать работу :) Заранее спасибо!');
+// alert('Дорогой проверяющий! Буду очень очень благодарна, если ты дашь мне ещё сутки, чтобы доделать работу :) Заранее спасибо!');
