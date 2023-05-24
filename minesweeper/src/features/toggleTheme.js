@@ -4,7 +4,6 @@ import { lightTheme } from '../icons/lightTheme';
 export const toggleTheme = (container) => {
 
     const buttonTheme = document.querySelector('.theme');
-    console.log('buttonTheme',buttonTheme);
     const childrenArray = Array.from(container.children);
     let isLight = true;
 

@@ -20,7 +20,6 @@ body {
     }
 }
 
-
 .title {
     text-transform: uppercase;
     font-size: 45px;
@@ -73,10 +72,6 @@ body {
     &-inactive {
         display: none;
     }
-
-    // &-dark {
-    //     background-color: $secondaryDark;
-    // }
 }
 
 .results {
@@ -195,6 +190,7 @@ body {
 .info {
     position: relative;
     width: 88%;
+    height: 24vh;
 
     &-wrapper {
         display: flex;
@@ -204,6 +200,11 @@ body {
         &-inactive {
             display: none;
         }
+    }
+
+    @include tablet {
+        width: 70%;
+        height: 12vh;
     }
 }
 
@@ -300,12 +301,6 @@ body {
         background-color: lighten($secondary, 4%);
         transition: background-color .3s linear;
     }
-
-    // @include mobile {
-    //     &:nth-child(2) {
-    //         margin-left: 10px;
-    //     }
-    // }
 
     &:nth-child(2) {
         margin-left: 10px;
@@ -520,22 +515,23 @@ body {
         }
 
         &-one {
-            // background-color: $bg;
             color: $black;
-
-            // &-dark {
-            //     background-color: $primary;
-            // }
         }
 
         &-two {
-            // background-color: $bg;
             color: $primaryBright;
         }
 
         &-three {
-            // background-color: $bg;
             color: $secondaryDark;
+        }
+
+        &-four {
+            color: blue;
+        }
+        
+        &-five {
+            color: green;
         }
     }
 }

@@ -50,7 +50,6 @@ export const changeLevel = () => {
         container.classList.remove('container-medium');
         container.classList.remove('container-hard');
         container.classList.add('container');
-
     };
 
     const handleMediumLevelButton = () => {

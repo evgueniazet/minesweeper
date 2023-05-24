@@ -72,13 +72,23 @@ const handleCell = (matrix) => {
                 }
 
                 if (attributeValue === '2' && !attributeFlag) {
-                    targetCell.classList.add('cell-open-three');
+                    targetCell.classList.add('cell-open-two');
                     targetCell.innerHTML = '2';
                 }
 
                 if (attributeValue === '3' && !attributeFlag) {
-                    targetCell.classList.add('cell-open-two');
+                    targetCell.classList.add('cell-open-three');
                     targetCell.innerHTML = '3';
+                }
+
+                if (attributeValue === '4' && !attributeFlag) {
+                    targetCell.classList.add('cell-open-four');
+                    targetCell.innerHTML = '4';
+                }
+
+                if (attributeValue === '5' && !attributeFlag) {
+                    targetCell.classList.add('cell-open-five');
+                    targetCell.innerHTML = '5';
                 }
             }
             isWin(newMatrix, bombCount, count);
@@ -111,94 +121,112 @@ const handleCell = (matrix) => {
 
     container.addEventListener('contextmenu', handleContextMenu);
 
-
     container.addEventListener('click', handleCellClick);
 
+    let isRightMouseDown = false;
 
-    container.addEventListener("mousedown", (event) => {
+    const handleClick = (e) => {
+        const childNodes = container.childNodes;
+        const childrenArray = [...childNodes];
 
-        const childrenArray = Array.from(container.children);
+        if (isRightMouseDown) {
 
-        event.preventDefault();
-        if (event.button === 2) {
-            container.addEventListener("click", (e) => {
+            const targetCell = e.target;
+            const cellIndex = [...(targetCell.parentNode?.children || [])].indexOf(targetCell);
 
-                const targetCell = e.target;
-                const cellIndex = [...(targetCell.parentNode?.children || [])].indexOf(targetCell);
-
-                const isNumberCell = (targetCell) => {
-                    if (targetCell.classList.contains('cell-open-one') && targetCell.classList.contains('cell-open')) {
-                        return true;
-                    }
-
-                    if (targetCell.classList.contains('cell-open-two') && targetCell.classList.contains('cell-open')) {
-                        return true;
-                    }
-
-                    if (targetCell.classList.contains('cell-open-three') && targetCell.classList.contains('cell-open')) {
-                        return true;
-                    }
+            const isNumberCell = (targetCell) => {
+                if (targetCell.classList.contains('cell-open-one') && targetCell.classList.contains('cell-open')) {
+                    return true;
                 }
 
-                if (isNumberCell(targetCell)) {
+                if (targetCell.classList.contains('cell-open-two') && targetCell.classList.contains('cell-open')) {
+                    return true;
+                }
 
-                    const neighbours = getNeighbours(newMatrix, cellIndex);
+                if (targetCell.classList.contains('cell-open-three') && targetCell.classList.contains('cell-open')) {
+                    return true;
+                }
+            }
 
-                    let countBomb = 0;
-                    let countFlag = 0;
+            if (isNumberCell(targetCell)) {
 
-                    childrenArray.forEach((elem, i) => {
+                const neighbours = getNeighbours(newMatrix, cellIndex);
 
-                        const attributeValue = elem.getAttribute('data-number');
+                let countBomb = 0;
+                let countFlag = 0;
 
-                        neighbours.forEach((item) => {
-                            if (i === item && elem.hasAttribute('data-is-lose')) {
-                                countBomb++;
+                childrenArray.forEach((elem, i) => {
+
+                    const attributeValue = elem.getAttribute('data-number');
+
+                    neighbours.forEach((item) => {
+                        if (i === item && elem.hasAttribute('data-is-lose')) {
+                            countBomb++;
+                        }
+
+                        if (i === item && elem.hasAttribute('data-flag', 'true')) {
+                            countFlag++;
+                        }
+
+                        if (countFlag === countBomb) {
+
+                            if (item === i && attributeValue === '0') {
+                                elem.classList.add('cell-open');
                             }
 
-                            if (i === item && elem.hasAttribute('data-flag', 'true')) {
-                                countFlag++;
+                            if (item === i && attributeValue === '1') {
+                                elem.classList.add('cell-open');
+                                elem.classList.add('cell-open-one');
+                                elem.innerHTML = '1';
                             }
 
-                            console.log('countFlag, countBomb', countFlag, countBomb);
-
-                            if (countFlag === countBomb) {
-
-                                if (item === i && attributeValue === '1') {
-                                    elem.classList.add('cell-open');
-                                    elem.classList.add('cell-open-one');
-                                    elem.innerHTML = '1';
-                                }
-
-                                if (item === i && attributeValue === '2') {
-                                    elem.classList.add('cell-open');
-                                    elem.classList.add('cell-open-two');
-                                    elem.innerHTML = '2';
-                                }
-
-                                if (item === i && attributeValue === '3') {
-                                    elem.classList.add('cell-open');
-                                    elem.classList.add('cell-open-three');
-                                    elem.innerHTML = '3';
-                                }
-
-                                // if (item === i && elem.hasAttribute('data-is-lose') && !elem.hasAttribute('data-flag', 'true')) {
-                                //     openBomb(elem);
-                                // }
-
-                                if (item === i && elem.hasAttribute('data-is-lose')) {
-                                    openBomb(elem);
-                                }
+                            if (item === i && attributeValue === '2') {
+                                elem.classList.add('cell-open');
+                                elem.classList.add('cell-open-two');
+                                elem.innerHTML = '2';
                             }
-                        })
+
+                            if (item === i && attributeValue === '3') {
+                                elem.classList.add('cell-open');
+                                elem.classList.add('cell-open-three');
+                                elem.innerHTML = '3';
+                            }
+                            if (item === i && attributeValue === '4') {
+                                targetCell.classList.add('cell-open-four');
+                                targetCell.innerHTML = '4';
+                            }
+
+                            if (item === i && attributeValue === '5') {
+                                targetCell.classList.add('cell-open-five');
+                                targetCell.innerHTML = '5';
+                            }
+
+                            if (item === i && elem.hasAttribute('data-is-lose') && !elem.hasAttribute('data-flag', 'true')) {
+                                openBomb(elem);
+                            }
+                        }
                     })
+                })
 
 
-                }
+            }
 
-            });
+        }
+    }
+
+    container.addEventListener('mousedown', (event) => {
+        if (event.button === 2) {
+            isRightMouseDown = true;
         }
     });
+
+    container.addEventListener('mouseup', (event) => {
+        if (event.button === 2) {
+            isRightMouseDown = false;
+        }
+    });
+
+    container.addEventListener('click', handleClick);
 
     changeSoundButton();
 

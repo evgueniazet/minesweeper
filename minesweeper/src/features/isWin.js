@@ -28,13 +28,15 @@ export const isWin = (matrix, bombCount, countMove) => {
             count++;
         }
     })
+    console.log('win', count, countWinCells);
 
     if (count === countWinCells) {
+
         gameOverMessage.classList.add('gameover-message-active');
         gameOverMessage.innerText = `Hooray! You found all mines in ${sum} seconds and ${countMove} moves!`;
         if (!(buttonSound.hasAttribute('data-sound-on') && buttonSound.getAttribute('data-sound-on') === 'false')) {
             audioWin.play();
-        }   
+        }
         localStorage.setItem(`${sum}`, `${countMove}`);
     }
 

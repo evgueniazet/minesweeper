@@ -34,9 +34,6 @@ const addMinesweeper = () => {
     handleCell(matrix);
     timer();
     changeLevel();
-    // toggleTheme();
 };
 
 addMinesweeper();
-
-alert('Дорогой проверяющий! Буду очень очень благодарна, если ты дашь мне ещё сутки, чтобы доделать работу :) Заранее спасибо!');
