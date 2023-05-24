@@ -102,7 +102,7 @@ const handleCell = (matrix) => {
         const targetCell = e.target.closest('.cell');
 
         if (targetCell && targetCell.classList.contains('cell') && targetCell.classList.length === 1) {
-            if (bombsCount.innerHTML > 0) {
+            if (bombsCount.innerHTML >= 0) {
                 const isFlag = targetCell.getAttribute('data-flag');
 
                 if (isFlag !== 'true') {
@@ -171,7 +171,10 @@ const handleCell = (matrix) => {
                         if (countFlag === countBomb) {
 
                             if (item === i && attributeValue === '0') {
-                                elem.classList.add('cell-open');
+                                // elem.classList.add('cell-open');
+                                const emptyCellArr = getEmptyCellArr(i, newMatrix);
+                                const openCellArr = getOpenCellsArr(emptyCellArr, newMatrix);
+                                openCells(openCellArr, container, elem);
                             }
 
                             if (item === i && attributeValue === '1') {
@@ -192,13 +195,15 @@ const handleCell = (matrix) => {
                                 elem.innerHTML = '3';
                             }
                             if (item === i && attributeValue === '4') {
-                                targetCell.classList.add('cell-open-four');
-                                targetCell.innerHTML = '4';
+                                elem.classList.add('cell-open');
+                                elem.classList.add('cell-open-four');
+                                elem.innerHTML = '4';
                             }
 
                             if (item === i && attributeValue === '5') {
-                                targetCell.classList.add('cell-open-five');
-                                targetCell.innerHTML = '5';
+                                elem.classList.add('cell-open');
+                                elem.classList.add('cell-open-five');
+                                elem.innerHTML = '5';
                             }
 
                             if (item === i && elem.hasAttribute('data-is-lose') && !elem.hasAttribute('data-flag', 'true')) {

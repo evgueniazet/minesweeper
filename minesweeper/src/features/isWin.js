@@ -28,7 +28,6 @@ export const isWin = (matrix, bombCount, countMove) => {
             count++;
         }
     })
-    console.log('win', count, countWinCells);
 
     if (count === countWinCells) {
 
