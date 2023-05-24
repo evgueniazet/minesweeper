@@ -109,11 +109,13 @@ const handleCell = (matrix) => {
                     targetCell.innerHTML = iconFlag;
                     targetCell.setAttribute('data-flag', 'true');
                     bombsCount.innerHTML = bombsCount.innerHTML - 1;
+                    isWin(newMatrix, bombCount, count);
                 } else {
                     const icon = targetCell.querySelector('.icon');
                     targetCell.removeChild(icon);
                     targetCell.removeAttribute('data-flag');
                     bombsCount.innerHTML = Number(bombsCount.innerHTML) + 1;
+                    isWin(newMatrix, bombCount, count);
                 }
             }
         }

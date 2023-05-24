@@ -12,8 +12,8 @@ export const isWin = (matrix, bombCount, countMove) => {
     const childNodes = container.childNodes;
     const childrenArray = [...childNodes];
     const timeElem = document.querySelector('.time');
-    const time = timeElem.querySelector('.text').innerHTML;
-    const substrings = time.split(':');
+    let timeInnerText = timeElem.querySelector('.text').innerHTML;
+    const substrings = timeInnerText.split(':');
     let min = 0;
 
     if (substrings[0] > 0) {
@@ -30,7 +30,6 @@ export const isWin = (matrix, bombCount, countMove) => {
     })
 
     if (count === countWinCells) {
-
         gameOverMessage.classList.add('gameover-message-active');
         gameOverMessage.innerText = `Hooray! You found all mines in ${sum} seconds and ${countMove} moves!`;
         if (!(buttonSound.hasAttribute('data-sound-on') && buttonSound.getAttribute('data-sound-on') === 'false')) {
@@ -38,6 +37,4 @@ export const isWin = (matrix, bombCount, countMove) => {
         }
         localStorage.setItem(`${sum}`, `${countMove}`);
     }
-
-    return `${sum} , ${countMove}`;
 };
